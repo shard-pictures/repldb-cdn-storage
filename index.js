@@ -5,7 +5,7 @@ const db = new Database();
 const fetch = require('node-fetch');
 const sizeof = require('object-sizeof')
 const { exec } = require("child_process");
-console.log("THIS MEANS THE UPDATE SCRIPT ACTUALLY WORKS LMAO version two")
+console.log("THIS MEANS THE UPDATE SCRIPT ACTUALLY WORKS LMAO version three")
 
 const genFn = () => {  
   return require('crypto')
@@ -35,7 +35,17 @@ app.get("/update", async (req, res) => {
     res.status(401).send("You are unauthenticated!")
     return
   }
-  exec('bash update.sh')
+  exec('bash update.sh', (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+  })
 })
 
 app.get("/newtoken", (req, res) => {
