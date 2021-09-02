@@ -29,6 +29,15 @@ app.get("/ping", async (req, res) => {
   res.send(size)
 })
 
+app.get("/update", (req, res) => {
+  let token = await db.get('token')
+  if (req.headers["token"] != token) {
+    res.status(401).send("You are unauthenticated!")
+    return
+  }
+  exec('bash update.sh')
+})
+
 app.get("/newtoken", (req, res) => {
   let temp_token = req.headers['temp_token']
   fetch('https://shard.pictures/retrieveToken', {
