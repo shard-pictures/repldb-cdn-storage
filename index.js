@@ -5,6 +5,7 @@ const db = new Database();
 const fetch = require('node-fetch');
 const sizeof = require('object-sizeof')
 const { exec } = require("child_process");
+const bodyParser = require('body-parser')
 
 const genFn = () => {  
   return require('crypto')
@@ -17,7 +18,8 @@ fetch(`https://shard.pictures/imalive/${process.env.REPL_OWNER}/${process.env.RE
 const app = express();
 
 app.use(express.json());
-app.use(express.bodyParser({limit: '1mb'}));
+
+var jsonParser = bodyParser.json({limit: '1mb'})
 
 app.get("/", (req, res) => {
   res.redirect('https://shard.pictures/')
@@ -86,7 +88,7 @@ app.get("/*", (req, res) => {
   })
 })
 
-app.post("/upload", async (req, res) => {
+app.post("/upload", jsonParser, async (req, res) => {
   let token = await db.get('token')
   if (req.headers["token"] != token) {
     res.status(401).send("You are unauthenticated!")
