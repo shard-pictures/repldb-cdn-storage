@@ -4,7 +4,7 @@ const Database = require("@replit/database")
 const db = new Database();
 const fetch = require('node-fetch');
 const sizeof = require('object-sizeof')
-
+const { exec } = require("child_process");
 console.log("THIS MEANS THE UPDATE SCRIPT ACTUALLY WORKS LMAO")
 
 const genFn = () => {  
