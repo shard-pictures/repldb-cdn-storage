@@ -5,7 +5,7 @@ const db = new Database();
 const fetch = require('node-fetch');
 const sizeof = require('object-sizeof')
 const { exec } = require("child_process");
-console.log("THIS MEANS THE UPDATE SCRIPT ACTUALLY WORKS LMAO version four")
+console.log("THIS MEANS THE UPDATE SCRIPT ACTUALLY WORKS LMAO version five")
 
 const genFn = () => {  
   return require('crypto')
