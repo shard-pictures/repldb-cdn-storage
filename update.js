@@ -10,4 +10,4 @@ const update_config = {
 
 const updater = new AutoGitUpdate(update_config);
 
-updater.autoUpdate();
+updater.forceUpdate(); //Should be running autoUpdate but this package is somehow broken and refuses to check versions properly lmao, it keeps on thinking the version is 1.0
