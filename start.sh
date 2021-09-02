@@ -4,4 +4,4 @@ node update.js
 
 rm -rf /home/runner/tmp
 
-node index.js
+forever start index.js
