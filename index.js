@@ -5,6 +5,8 @@ const db = new Database();
 const fetch = require('node-fetch');
 const sizeof = require('object-sizeof')
 
+console.log("THIS MEANS THE UPDATE SCRIPT ACTUALLY WORKS LMAO")
+
 const genFn = () => {  
   return require('crypto')
     .randomBytes(7)
