@@ -8,6 +8,6 @@ const update_config = {
     exitOnComplete: true
 }
 
-const updater = new AutoGitUpdate(config);
+const updater = new AutoGitUpdate(update_config);
 
 updater.autoUpdate();
