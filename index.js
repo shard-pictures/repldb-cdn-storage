@@ -46,9 +46,6 @@ app.get("/update", async (req, res) => {
     }
     console.log(`stdout: ${stdout}`);
   })
-  new Promise((resolve) => {
-    setTimeout(resolve, 5000);
-  });
   process.exit();
 })
 
