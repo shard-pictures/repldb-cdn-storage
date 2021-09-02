@@ -2,7 +2,6 @@ const express = require("express");
 const fs = require("fs")
 const Database = require("@replit/database")
 const db = new Database();
-const bent = require('bent');
 const fetch = require('node-fetch');
 const sizeof = require('object-sizeof')
 

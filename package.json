@@ -20,7 +20,7 @@
   "dependencies": {
     "@replit/database": "^2.0.1",
     "argon2-pass": "^1.0.2",
-    "bent": "^7.3.12",
+    "auto-git-update": "^2.0.1",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "object-sizeof": "^1.6.1"
