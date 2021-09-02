@@ -1,7 +1,7 @@
 const AutoGitUpdate = require('auto-git-update');
 
 const update_config = {
-    repository: 'https://github.com/chegele/BackupPurger',
+    repository: 'https://github.com/shard-pictures/repldb-cdn-storage',
     tempLocation: '/home/runner/tmp/',
     ignoreFiles: [],
     executeOnComplete: 'node /home/runner/index.js',
