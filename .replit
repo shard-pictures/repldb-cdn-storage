@@ -1,1 +1,1 @@
-run="bash update.js && node start.js"
+run="bash update.sh && node start.js"
