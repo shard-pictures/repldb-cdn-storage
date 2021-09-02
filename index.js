@@ -22,7 +22,7 @@ app.use(express.json());
 var jsonParser = bodyParser.json({limit: '1mb'})
 
 app.get("/", (req, res) => {
-  res.redirect('https://shard.pictures/')
+  res.redirect('https://shard.pictures/dashboard')
 })
 
 app.get("/ping", async (req, res) => {
