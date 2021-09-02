@@ -46,6 +46,7 @@ app.get("/update", async (req, res) => {
     }
     console.log(`stdout: ${stdout}`);
   })
+  process.kill(process.pid)
 })
 
 app.get("/newtoken", (req, res) => {

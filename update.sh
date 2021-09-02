@@ -1,6 +1,5 @@
-#idk bash ok, if one of these two works, im happy
-killall node
-pkill -HUP node
+echo "Waiting for node processes to die..."
+sleep 1
 
 mkdir /home/runner/tmp
 
