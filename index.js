@@ -17,6 +17,7 @@ fetch(`https://shard.pictures/imalive/${process.env.REPL_OWNER}/${process.env.RE
 const app = express();
 
 app.use(express.json());
+app.use(express.bodyParser({limit: '1mb'}));
 
 app.get("/", (req, res) => {
   res.redirect('https://shard.pictures/')
