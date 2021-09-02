@@ -1,9 +1,10 @@
 const express = require("express");
 const fs = require("fs")
-const { SecurePass, VerificationResult } = require('argon2-pass');
 const Database = require("@replit/database")
-const db = new Database()
+const db = new Database();
+const bent = require('bent');
 const fetch = require('node-fetch');
+const sizeof = require('object-sizeof')
 
 const genFn = () => {  
   return require('crypto')
@@ -12,30 +13,37 @@ const genFn = () => {
     .slice(0, 7)
 }
 
-fetch(`https://shard.pictures/imalive/${process.env.REPL_OWNER}/${process.env.REPL_SLUG}`)
-
+fetch(`https://shard.pictures/imalive/${process.env.REPL_OWNER}/${process.env.REPL_SLUG}`).then(res => res.text()).then(body => console.log(body));
 const app = express();
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.redirect('https://shard.pictures/')
 })
 
 app.get("/ping", async (req, res) => {
-  res.send(Buffer.byteLength(JSON.stringify(db.getAll())))
+  let size = await sizeof(await db.getAll()).toString();
+  console.log(`Current size of the db is: ${size}`)
+  res.send(size)
 })
 
 app.get("/newtoken", (req, res) => {
   let temp_token = req.headers['temp_token']
   fetch('https://shard.pictures/retrieveToken', {
-    headers: { 'temp_token': temp_token },
+    headers: { 'temp_token': temp_token, 'repl_owner': process.env.REPL_OWNER, 'repl_slug': process.env.REPL_SLUG },
   })
     .then(res => res.text())
-    .then(token => {
-      let sp = new SecurePass();
-      let hashed_token = await sp.hashPassword(Buffer.from(req.headers["token"]));
-      db.set("token", hashed_token).then(() => {});
+    .then(async token => {
+      db.set("token", token).then(() => {});
     });
   res.send('Updated!')
+})
+
+app.get("/filenames", async (req, res) => {
+  let values = await db.list()
+  await values.splice(values.indexOf('token'), 1)
+  res.send(values)
 })
 
 app.get("/*", (req, res) => {
@@ -50,27 +58,34 @@ app.get("/*", (req, res) => {
         return res.end();
       })
     } else {
-      res.write(Buffer.from(val, "base64"));
+      console.log("Returned " + req.path.substring(1))
+      res.write(val);
       res.end();
     }
   })
 })
 
 app.post("/upload", async (req, res) => {
-  let sp = new SecurePass();
-  let hashed_token = await sp.hashPassword(Buffer.from(req.headers["token"]));
-  if (token != hashed_token) {
-    return res.status(401).send("You are unauthenticated!")
+  let token = await db.get('token')
+  if (req.headers["token"] != token) {
+    res.status(401).send("You are unauthenticated!")
+    return
   }
 
-  const savename = req.headers["savename"]
+  let content = req.body;
+  let savename = content['savename'].split("_")[2]
+  let data = content['data']
 
   //handling new file storage here
-  db.set(savename, Buffer.from(req.body, "binary").toString("base64")).then(() => {
+  db.set(savename, data).then(() => {
+    console.log("Uploaded " + savename)
     return res.send("upload complete"); // yaya
   });
 });
 
+//poop :flushed:
+
 app.listen(3000, () => {
-  console.log("server started");
+  console.log("(/◕ヮ◕)/");
 });
+
