@@ -19,7 +19,7 @@ const app = express();
 
 app.use(express.json());
 
-var jsonParser = bodyParser.json({limit: '1mb'})
+var jsonParser = bodyParser.json({limit: '5mb'})
 
 app.get("/", (req, res) => {
   res.redirect('https://shard.pictures/dashboard')
